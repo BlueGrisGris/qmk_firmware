@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 
 enum sofle_layers {
-    _M_XYZ = Mac Os /*, _W_XYZ = Win/Linux */
+    /*_M_XYZ = Mac Os , _W_XYZ = Win/Linux */
     _QWERTY,
     _LOWER,
     _RAISE,
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT(
   _______, _______ , _______ , _______ , _______ , _______,                           _______,  _______  , _______,  _______ ,  _______ ,_______,
   _______,  KC_INS,  KC_PSCR,   KC_APP,  XXXXXXX, XXXXXXX,                        KC_PGUP, KC_PRVWD,   KC_UP, KC_NXTWD,KC_DLINE, KC_BSPC,
-  _______, KC_LALT,  KC_LCTL,  KC_LSFT,  XXXXXXX, KC_CAPS,                       KC_PGDN,  KC_LEFT, KC_DOWN, KC_RGHT,  KC_DEL, KC_BSPC,
+  _______, KC_LALT,  KC_LCTL,  KC_LSFT,  XXXXXXX, KC_CAPS,                       KC_LEFT,  KC_DOWN, KC_UP, KC_RGHT,  KC_DEL, KC_BSPC,
   _______,KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,  _______,       _______,  XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND,   XXXXXXX, _______,
                          _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
@@ -139,9 +139,6 @@ static void print_status_narrow(void) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Qwrt"), false);
             break;
-        case _COLEMAK:
-            oled_write_ln_P(PSTR("Clmk"), false);
-            break;
         default:
             oled_write_P(PSTR("Undef"), false);
     }
@@ -149,7 +146,6 @@ static void print_status_narrow(void) {
     // Print current layer
     oled_write_ln_P(PSTR("LAYER"), false);
     switch (get_highest_layer(layer_state)) {
-        case _COLEMAK:
         case _QWERTY:
             oled_write_P(PSTR("Base\n"), false);
             break;
@@ -193,11 +189,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_QWERTY:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-        case KC_COLEMAK:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_COLEMAK);
             }
             return false;
         case KC_LOWER:
